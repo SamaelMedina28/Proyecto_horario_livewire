@@ -14,7 +14,4 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/nuevo', function () {
-        return view('nuevo');
-    })->name('nuevo');
 });

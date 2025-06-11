@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Materia;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,6 +25,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Vanessa de Jesus',
             'email' => 'vanessa@gmail.com',
             'password' => bcrypt('2832882812'),
+        ]);
+
+        Materia::create([
+            'nombre' => 'Matematicas',
+            'codigo' => 'MAT101',
         ]);
     }
 }
