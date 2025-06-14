@@ -1,12 +1,13 @@
 <div>
-    <div>
-        <h1>Hoy es {{ ucfirst($diaActual) }}</h1>
-
-        <button wire:click="siguienteDia()">
-            Día siguiente
+    <h1>Día actual: {{ ucfirst($diaActual) }}</h1>
+    
+    @if($mostrarTerminar)
+        <button wire:click="siguienteDia" class="btn btn-danger mt-3">
+            Terminar
         </button>
-
-    </div>
-
-
+    @else
+        <button wire:click="siguienteDia" class="btn btn-primary mt-3">
+            Ir a {{ ucfirst($diaSiguiente) }}
+        </button>
+    @endif
 </div>
