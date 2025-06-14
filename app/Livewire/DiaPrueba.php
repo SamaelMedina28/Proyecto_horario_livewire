@@ -38,7 +38,7 @@ class DiaPrueba extends Component
         $this->calcularSiguienteDia();
 
         // Actualizar la URL sin recargar la página
-        $this->dispatch('urlChanged', url: "/dia/{$this->diaActual}");
+        return $this->redirect("/dia/{$this->diaActual}", navigate: true);
     }
 
     public function render()
