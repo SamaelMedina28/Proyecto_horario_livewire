@@ -15,7 +15,7 @@ class MateriasController extends Controller
 
     public function clases($dia)
     {
-        $materias = Materia::where('user_id', auth()->user()->id)->get();
+        $materias = auth()->user()->materias()->get();
         return view('config.clases', compact('dia', 'materias'));
     }
 }

@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\config\MateriasController;
+use App\Models\Clase;
 
 Route::get('/', function () {
-    return "Entraste a la vista principal";
+    $clases = auth()->user()->clases()->where('dia', 'domingo')->get();
+    return $clases;
 })->middleware('auth', 'isOld')->name('welcome');
 
 Route::get('/materias', [MateriasController::class, 'index'])->middleware('auth', 'isNew')->name('materias.index');
@@ -12,13 +14,6 @@ Route::get('/materias', [MateriasController::class, 'index'])->middleware('auth'
 Route::get('/clases/{dia}', [MateriasController::class, 'clases'])->middleware('auth', 'isNew')->name('materias.clases');
 
 
-// Route::get('/dia/{dia}', function ($dia) {
-//     return view('dashboard', ['dia' => $dia]);
-// })->middleware(['isNew', 'auth:sanctum']);
-
-// Route::get('/prueba', function () {
-//     return view('prueba.prueba');
-// })->name('prueba');
 
 Route::middleware([
     'auth:sanctum',

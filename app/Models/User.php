@@ -69,4 +69,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Materia::class);
     }
+    public function clases()
+    {
+        return $this->hasMany(Clase::class);
+    }
 }
