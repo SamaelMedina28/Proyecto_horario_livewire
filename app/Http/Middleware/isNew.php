@@ -16,10 +16,10 @@ class isNew
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()->nuevo == 1) {
-            $request->user()->update([
-                'nuevo' => 0,
-            ]);
-            return redirect()->route('prueba');
+            // $request->user()->update([
+            //     'nuevo' => 0,
+            // ]);
+            return redirect()->route('now');
         }
         return $next($request);
     }

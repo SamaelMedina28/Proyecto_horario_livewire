@@ -3,16 +3,21 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return "Entraste a la vista principal";
 })->middleware('auth', 'isNew')->name('welcome');
 
-Route::get('/dia/{dia}', function ($dia) {
-    return view('dashboard', ['dia' => $dia]);
-})->middleware(['isNew', 'auth:sanctum']);
+Route::get('/now', function () {
+    return "Entraste a la vista del dia " . now();
+})->middleware('auth')->name('now');
 
-Route::get('/prueba', function () {
-    return view('prueba.prueba');
-})->name('prueba');
+
+// Route::get('/dia/{dia}', function ($dia) {
+//     return view('dashboard', ['dia' => $dia]);
+// })->middleware(['isNew', 'auth:sanctum']);
+
+// Route::get('/prueba', function () {
+//     return view('prueba.prueba');
+// })->name('prueba');
 
 Route::middleware([
     'auth:sanctum',
