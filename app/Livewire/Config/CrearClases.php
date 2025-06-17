@@ -12,6 +12,14 @@ class CrearClases extends Component
     public $diaSiguiente;
     public $mostrarTerminar = false;
     protected $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+
+    public $materia;
+    public $salon;
+    public $edificio;
+    public $profesor;
+    public $hora_inicio;
+    public $hora_fin;
+
     
     public $materias;
     public function render()
@@ -32,16 +40,49 @@ class CrearClases extends Component
         $this->diaSiguiente = $this->dias[$indiceSiguiente];
         $this->mostrarTerminar = ($this->diaSiguiente === 'lunes');
     }
-    public function siguienteDia()
+    // public function siguienteDia()
+    // {
+    //     if ($this->mostrarTerminar) {
+    //         return $this->redirect(route('welcome'), navigate: true);
+    //     }
+
+    //     $this->diaActual = $this->diaSiguiente;
+    //     $this->calcularSiguienteDia();
+
+    //     // Actualizar la URL sin recargar la página
+    //     return $this->redirect("/clases/{$this->diaActual}", navigate: true);
+    // }
+    public function crearClases()
     {
-        if ($this->mostrarTerminar) {
-            return $this->redirect(route('welcome'), navigate: true);
-        }
+        $this->validate([
+            'materia' => 'required',
+            'salon' => 'required',
+            'diaActual' => 'required',
+            'edificio' => 'required',
+            'profesor' => 'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
+        ],[
+            'materia.required' => 'Debes seleccionar una materia',
+            'salon.required' => 'Debes ingresar un salon',
+            'diaActual.required' => 'Debes ingresar un dia',
+            'edificio.required' => 'Debes ingresar un edificio',
+            'profesor.required' => 'Debes ingresar un profesor',
+            'hora_inicio.required' => 'Debes ingresar una hora de inicio',
+            'hora_fin.required' => 'Debes ingresar una hora de fin',
+        ]);
 
-        $this->diaActual = $this->diaSiguiente;
-        $this->calcularSiguienteDia();
+        Clase::create([
+            'materia_id' => $this->materia,
+            'dia' => $this->diaActual,
+            'user_id' => auth()->user()->id,
+            'salon' => $this->salon,
+            'edificio' => $this->edificio,
+            'profesor' => $this->profesor,
+            'hora_inicio' => $this->hora_inicio,
+            'hora_fin' => $this->hora_fin,
+        ]);
 
-        // Actualizar la URL sin recargar la página
-        return $this->redirect("/clases/{$this->diaActual}", navigate: true);
+        $this->redirect(route('materias.clases', ['dia' => $this->diaSiguiente]), navigate: true);
     }
 }

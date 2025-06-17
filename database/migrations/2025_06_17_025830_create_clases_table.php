@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('clases', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
             $table->foreignId('materia_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('dia', ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']);
             $table->string('salon');
-            $table->integer('edificios');
+            $table->string('edificio');
             $table->string('profesor');
             $table->time('hora_inicio');
             $table->time('hora_fin');
