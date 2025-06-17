@@ -11,4 +11,10 @@ class MateriasController extends Controller
     {
         return view('config.materias');
     }
+
+    public function clases($dia)
+    {
+        return "Aqui se añadiran las clases del dia: " . $dia;
+        return view('config.clases', compact('dia'));
+    }
 }

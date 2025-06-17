@@ -38,6 +38,7 @@ class CrearMaterias extends Component
 
         $this->formularios = [['nombre' => '', 'user_id' => auth()->user()->id]];
         $this->cargarMaterias();
+        return redirect()->route('materias.clases', ['dia' => 'Lunes']);
     }
 
     public function eliminarMateria($id)
