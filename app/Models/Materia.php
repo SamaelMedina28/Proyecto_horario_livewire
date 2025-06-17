@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+    
 use Illuminate\Database\Eloquent\Model;
 
 class Materia extends Model
@@ -9,7 +9,11 @@ class Materia extends Model
     protected $table = 'materias';
     protected $fillable = [
         'nombre',
-        'codigo',
+        'user_id',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

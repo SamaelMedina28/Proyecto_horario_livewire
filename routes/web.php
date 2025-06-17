@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\config\MateriasController;
 
 Route::get('/', function () {
     return "Entraste a la vista principal";
 })->middleware('auth', 'isNew')->name('welcome');
 
-Route::get('/now', function () {
-    return "Entraste a la vista del dia " . now();
-})->middleware('auth')->name('now');
+Route::get('/materias', [MateriasController::class, 'index'])->middleware('auth')->name('materias.index');
 
 
 // Route::get('/dia/{dia}', function ($dia) {
