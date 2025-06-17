@@ -15,14 +15,10 @@ class isNew
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Si el usuario es nuevo, redirigirlo a la vista de materias
-        if ($request->user()->nuevo == 1) {
-            // $request->user()->update([
-            //     'nuevo' => 0,
-            // ]);
-            return redirect()->route('materias.index');
+        
+        if ($request->user()->nuevo === 0) {
+            return redirect()->route('welcome');
         }
-        // Si el usuario no es nuevo, continuar con la solicitud
         return $next($request);
     }
 }

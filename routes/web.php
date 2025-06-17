@@ -5,11 +5,11 @@ use App\Http\Controllers\config\MateriasController;
 
 Route::get('/', function () {
     return "Entraste a la vista principal";
-})->middleware('auth', 'isNew')->name('welcome');
+})->middleware('auth', 'isOld')->name('welcome');
 
-Route::get('/materias', [MateriasController::class, 'index'])->middleware('auth', 'isOld')->name('materias.index');
+Route::get('/materias', [MateriasController::class, 'index'])->middleware('auth', 'isNew')->name('materias.index');
 
-Route::get('/clases/{dia}', [MateriasController::class, 'clases'])->middleware('auth', 'isOld')->name('materias.clases');
+Route::get('/clases/{dia}', [MateriasController::class, 'clases'])->middleware('auth', 'isNew')->name('materias.clases');
 
 
 // Route::get('/dia/{dia}', function ($dia) {
