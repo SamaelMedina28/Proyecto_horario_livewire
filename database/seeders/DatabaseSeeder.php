@@ -27,9 +27,5 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('2832882812'),
         ]);
 
-        Materia::create([
-            'nombre' => 'Matematicas',
-            'codigo' => 'MAT101',
-        ]);
     }
 }
