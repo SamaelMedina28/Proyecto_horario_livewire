@@ -3,26 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\config\MateriasController;
 use App\Models\Clase;
+use Carbon\Carbon;
 
 Route::get('/', function () {
-    //Obtener el dia actual
-    // Obtener el día en inglés
-    $diaIngles = strtolower(date('l')); // Ej: "monday"
-
-    // Mapeo de días inglés -> español
-    $diasTraducidos = [
-        'monday'    => 'lunes',
-        'tuesday'   => 'martes',
-        'wednesday' => 'miercoles',
-        'thursday'  => 'jueves',
-        'friday'    => 'viernes',
-        'saturday'  => 'sabado',
-        'sunday'    => 'domingo'
-    ];
 
     // Obtener el día en español
-    $diaActual = $diasTraducidos[$diaIngles];
-
+    $diaActual = Carbon::now()->locale('es')->dayName;
     // Consulta
     $clases = auth()->user()->clases()->where('dia', $diaActual)->get();
     return $clases;
