@@ -7,6 +7,6 @@
     
     <div class="py-12 bg-lime-500">
         @livewire('create-form') 
-        @livewire('dia-prueba', ['dia' => $dia])
+        {{-- @livewire('dia-prueba', ['dia' => $dia]) --}}
     </div>
 </x-app-layout>
