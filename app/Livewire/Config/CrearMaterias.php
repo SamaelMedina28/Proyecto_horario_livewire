@@ -7,18 +7,11 @@ use Livewire\Component;
 
 class CrearMaterias extends Component
 {
-    public $materias = [];
     public $formularios = []; // Array para almacenar los datos de cada formulario
 
     public function mount()
     {
-        $this->cargarMaterias();
         $this->agregarFormulario(); // Iniciamos con un formulario
-    }
-
-    public function cargarMaterias()
-    {
-        $this->materias = Materia::where('user_id', auth()->user()->id)->get();
     }
 
     public function agregarFormulario()
@@ -37,14 +30,8 @@ class CrearMaterias extends Component
         }
 
         $this->formularios = [['nombre' => '', 'user_id' => auth()->user()->id]];
-        $this->cargarMaterias();
-        return redirect()->route('materias.clases', ['dia' => 'Lunes']);
-    }
-
-    public function eliminarMateria($id)
-    {
-        Materia::destroy($id);
-        $this->cargarMaterias();
+        //redirigir a la vista de materias sin recargar la pagina
+        return $this->redirect(route('materias.clases', ['dia' => 'Lunes']), navigate: true);
     }
 
     public function render()
