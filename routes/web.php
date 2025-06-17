@@ -8,7 +8,11 @@ Route::get('/', function () {
 
 Route::get('/dia/{dia}', function ($dia) {
     return view('dashboard', ['dia' => $dia]);
-});
+})->middleware(['isNew', 'auth:sanctum']);
+
+Route::get('/prueba', function () {
+    return view('prueba.prueba');
+})->name('prueba');
 
 Route::middleware([
     'auth:sanctum',
