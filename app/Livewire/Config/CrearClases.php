@@ -90,8 +90,8 @@ class CrearClases extends Component
             'salon' => '',
             'edificio' => '',
             'profesor' => '',
-            'hora_inicio' => '',
-            'hora_fin' => '',
+            'hora_inicio' => '08:00',
+            'hora_fin' => '09:00',
         ];
     }
 }
