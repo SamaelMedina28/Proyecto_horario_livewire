@@ -39,7 +39,7 @@
                     </a>
                 @endif
 
-                <x-button class="ms-4 bg-green-700 hover:bg-green-800 focus:bg-green-800 active:bg-green-800">
+                <x-button>
                     Iniciar Sesión
                 </x-button>
             </div>

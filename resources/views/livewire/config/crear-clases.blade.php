@@ -82,7 +82,7 @@
 
         <div class="flex justify-end w-full mt-6">
             <x-button type="submit"
-                class="ms-4 bg-green-700 hover:bg-green-800 focus:bg-green-800 active:bg-green-800">
+                class="bg-green-700 hover:bg-green-800 focus:bg-green-800 active:bg-green-800">
                 {{ $mostrarTerminar ? 'Terminar' : 'Siguiente' }}
             </x-button>
         </div>
