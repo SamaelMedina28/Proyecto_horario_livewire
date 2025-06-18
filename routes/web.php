@@ -10,8 +10,8 @@ Route::get('/', function () {
     // Obtener el día en español
     $diaActual = Carbon::now()->locale('es')->dayName;
     // Consulta
-    $clases = auth()->user()->clases()->where('dia', $diaActual)->get();
-    return $clases;
+    $clases = auth()->user()->clases()->get();
+    return view('shows.index', compact('clases', 'diaActual'));
 })->middleware('auth', 'isOld')->name('welcome');
 
 Route::get('/materias', [MateriasController::class, 'index'])->middleware('auth', 'isNew')->name('materias.index');
