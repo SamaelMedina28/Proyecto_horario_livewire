@@ -18,6 +18,10 @@ class CrearMaterias extends Component
     {
         $this->formularios[] = ['nombre' => '', 'user_id' => auth()->user()->id];
     }
+    public function eliminarFormulario($index)
+    {
+        unset($this->formularios[$index]);
+    }
 
     public function crearMaterias()
     {
