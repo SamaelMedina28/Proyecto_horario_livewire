@@ -11,7 +11,7 @@ class CrearClases extends Component
     public $diaActual;
     public $diaSiguiente;
     public $mostrarTerminar = false;
-    protected $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+    protected $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
 
     public $clases = [];
 
@@ -36,18 +36,7 @@ class CrearClases extends Component
         $this->diaSiguiente = $this->dias[$indiceSiguiente];
         $this->mostrarTerminar = ($this->diaSiguiente === 'lunes');
     }
-/*     public function siguienteDia()
-    {
-        if ($this->mostrarTerminar) {
-            return $this->redirect(route('welcome'), navigate: true);
-        }
 
-        $this->diaActual = $this->diaSiguiente;
-        $this->calcularSiguienteDia();
-
-        // Actualizar la URL sin recargar la página
-        return $this->redirect("/clases/{$this->diaActual}", navigate: true);
-    } */
     public function crearClases()
     {
         $this->validate([
@@ -76,7 +65,7 @@ class CrearClases extends Component
         if ($this->mostrarTerminar) {
             //Hacer que el campo "Nuevo" del usuario autenticado cambie a 0
             auth()->user()->update(['nuevo' => 0]);
-            return $this->redirect(route('welcome'), navigate: true);
+            return $this->redirect(route('welcome'));
         }
 
         $this->redirect(route('materias.clases', ['dia' => $this->diaSiguiente]), navigate: true);

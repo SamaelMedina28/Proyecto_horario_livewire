@@ -1,22 +1,20 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Horario de Clases
-        </h2>
-    </x-slot>
+
 
     @php
-        $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+        $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
     @endphp
 
     <style>
         .slider-outer {
-            max-width: 42rem; /* max-w-2xl */
+            max-width: 42rem;
+            /* max-w-2xl */
             margin-left: auto;
             margin-right: auto;
             width: 100%;
             position: relative;
         }
+
         .slider-container {
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
@@ -25,6 +23,7 @@
             scroll-behavior: smooth;
             width: 100%;
         }
+
         .slide {
             scroll-snap-align: center;
             flex: 0 0 100%;
@@ -32,22 +31,25 @@
             box-sizing: border-box;
             min-width: 100%;
         }
+
         .slider-container::-webkit-scrollbar {
             display: none;
         }
     </style>
 
-    <div class="py-6 select-none touch-callout-none user-select-none">
+    <div class="py-6 select-none">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="slider-outer"> <!-- Nuevo contenedor externo -->
-                <div id="slider" class="slider-container">
+                <div id="slider" class="slider-container h-[calc(80vh-4rem)]">
                     @foreach ($dias as $dia)
                         <div class="slide" data-dia="{{ $dia }}" wire:key="{{ $dia }}">
                             <!-- Contenido del slide igual que antes -->
                             <div class="space-y-6">
-                                <h3 class="text-2xl font-semibold text-center text-gray-800">
-                                    {{ ucfirst($dia) }}
-                                </h3>
+                                <div class="flex justify-center">
+                                    <h3 class="text-xl font-semibold text-center text-gray-800 border-2 border-gray-900 py-2 px-4 uppercase inline">
+                                        {{ ucfirst($dia) }}
+                                    </h3>
+                                </div>
 
                                 @php
                                     $clasesDia = $clases->filter(fn($c) => strtolower($c->dia) === $dia);
@@ -59,12 +61,14 @@
                                     </div>
                                 @else
                                     @foreach ($clasesDia as $clase)
-                                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-2">
-                                            <p class="font-medium text-gray-900 text-center">{{ $clase->materia->nombre }}</p>
+                                        <a href="{{ route('clases.show', $clase->id) }}"
+                                            class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-2">
+                                            <p class="font-medium text-gray-900 text-center">
+                                                {{ $clase->materia->nombre }}</p>
                                             <div class="text-sm text-center text-gray-800">
                                                 {{ $clase->hora_inicio }} - {{ $clase->hora_fin }}
                                             </div>
-                                        </div>
+                                        </a>
                                     @endforeach
                                 @endif
                             </div>
@@ -87,11 +91,14 @@
                 const outerRect = outer.getBoundingClientRect();
                 const slideRect = slide.getBoundingClientRect();
                 const scrollPosition = slide.offsetLeft - (outerRect.width / 2) + (slideRect.width / 2);
-                
-                slider.scrollTo({
-                    left: scrollPosition,
-                    behavior: 'auto'
+
+                requestAnimationFrame(() => {
+                    slider.scrollTo({
+                        left: scrollPosition,
+                        behavior: 'smooth'
+                    });
                 });
+
             }
 
             // Centrar el día actual al cargar
