@@ -18,6 +18,10 @@ class CrearMaterias extends Component
     {
         $this->formularios[] = ['nombre' => '', 'user_id' => auth()->user()->id];
     }
+    public function eliminarFormulario($index)
+    {
+        unset($this->formularios[$index]);
+    }
 
     public function crearMaterias()
     {
@@ -34,7 +38,6 @@ class CrearMaterias extends Component
             Materia::create($formulario);
         }
 
-        $this->formularios = [['nombre' => '', 'user_id' => auth()->user()->id]];
         //redirigir a la vista de materias sin recargar la pagina
         return $this->redirect(route('materias.clases', ['dia' => 'Lunes']), navigate: true);
     }
