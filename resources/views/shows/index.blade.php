@@ -1,18 +1,4 @@
 <x-app-layout>
-    @php
-        $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-        // Obtener el día actual en español
-        $diaActual = strtolower(date('l')); // Día en inglés
-        $diasIngles = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        $diasEspanol = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
-        $diaActual = str_replace($diasIngles, $diasEspanol, $diaActual);
-        
-        // Si es fin de semana, mostrar el lunes
-        if (!in_array($diaActual, $dias)) {
-            $diaActual = 'lunes';
-        }
-    @endphp
-
     <style>
         .slider-outer {
             max-width: 42rem;

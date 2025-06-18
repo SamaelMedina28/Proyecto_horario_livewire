@@ -11,11 +11,20 @@ class ClasesController extends Controller
 {
     public function index()
     {
-        // Obtener el día en español
-        $diaActual = Carbon::now()->locale('es')->dayName;
+        $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+        // Obtener el día actual en español
+        $diaActual = strtolower(date('l')); // Día en inglés
+        $diasIngles = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        $diasEspanol = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+        $diaActual = str_replace($diasIngles, $diasEspanol, $diaActual);
+
+        // Si es fin de semana, mostrar el lunes
+        if (!in_array($diaActual, $dias)) {
+            $diaActual = 'lunes';
+        }
         // Consulta
         $clases = auth()->user()->clases()->get();
-        return view('shows.index', compact('clases', 'diaActual'));
+        return view('shows.index', compact('clases', 'diaActual','dias'));
     }
     public function show($id)
     {
