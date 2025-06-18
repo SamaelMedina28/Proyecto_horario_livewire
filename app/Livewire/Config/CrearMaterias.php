@@ -23,6 +23,11 @@ class CrearMaterias extends Component
     {
         $this->validate([
             'formularios.*.nombre' => 'required|string|max:255',
+        ],
+        [
+            'formularios.*.nombre.required' => 'El nombre de la materia es obligatorio',
+            'formularios.*.nombre.string' => 'El nombre de la materia debe ser una cadena de texto',
+            'formularios.*.nombre.max' => 'El nombre de la materia debe tener un máximo de 255 caracteres',
         ]);
 
         foreach ($this->formularios as $formulario) {

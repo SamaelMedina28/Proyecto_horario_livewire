@@ -20,13 +20,13 @@
     <body class="font-sans antialiased">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-lime-500">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="flex items-center justify-center py-10">
+                    <div class="font-semibold text-lg text-gray-800 leading-tight border-2 text-center py-3 px-6 items-center justify-center border-gray-900 uppercase">
                         {{ $header }}
                     </div>
                 </header>
