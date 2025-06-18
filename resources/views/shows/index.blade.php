@@ -1,14 +1,21 @@
 <x-app-layout>
-
-
     @php
         $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+        // Obtener el día actual en español
+        $diaActual = strtolower(date('l')); // Día en inglés
+        $diasIngles = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        $diasEspanol = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+        $diaActual = str_replace($diasIngles, $diasEspanol, $diaActual);
+        
+        // Si es fin de semana, mostrar el lunes
+        if (!in_array($diaActual, $dias)) {
+            $diaActual = 'lunes';
+        }
     @endphp
 
     <style>
         .slider-outer {
             max-width: 42rem;
-            /* max-w-2xl */
             margin-left: auto;
             margin-right: auto;
             width: 100%;
@@ -35,18 +42,18 @@
         .slider-container::-webkit-scrollbar {
             display: none;
         }
+
     </style>
 
     <div class="py-6 select-none">
         <div class="mx-auto sm:px-6 lg:px-8">
-            <div class="slider-outer"> <!-- Nuevo contenedor externo -->
+            <div class="slider-outer">
                 <div id="slider" class="slider-container h-[calc(80vh-4rem)]">
                     @foreach ($dias as $dia)
-                        <div class="slide" data-dia="{{ $dia }}" wire:key="{{ $dia }}">
-                            <!-- Contenido del slide igual que antes -->
+                        <div class="slide {{ $dia === $diaActual ? 'active' : '' }}" data-dia="{{ $dia }}">
                             <div class="space-y-6">
                                 <div class="flex justify-center">
-                                    <h3 class="text-xl font-semibold text-center text-gray-800 border-2 border-gray-900 py-2 px-4 uppercase inline">
+                                    <h3 class="text-xl font-semibold text-center text-gray-800 border-2 border-gray-900 py-2 px-4 transition-colors duration-300">
                                         {{ ucfirst($dia) }}
                                     </h3>
                                 </div>
@@ -81,61 +88,93 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const diaActual = "{{ strtolower($diaActual) }}";
+            const diaActual = "{{ $diaActual }}";
             const slider = document.getElementById("slider");
             const slides = slider.querySelectorAll(".slide");
             const outer = slider.parentElement;
 
-            // Función para centrar correctamente considerando el contenedor limitado
-            function centerSlide(slide) {
-                const outerRect = outer.getBoundingClientRect();
-                const slideRect = slide.getBoundingClientRect();
-                const scrollPosition = slide.offsetLeft - (outerRect.width / 2) + (slideRect.width / 2);
+            console.log('Día actual:', diaActual); // Para debugging
 
-                requestAnimationFrame(() => {
+            // Función para centrar el slide
+            function centerSlide(targetSlide) {
+                const slideWidth = targetSlide.offsetWidth;
+                const containerWidth = outer.offsetWidth;
+                const slideOffset = targetSlide.offsetLeft;
+                
+                // Calcular la posición para centrar el slide
+                const scrollPosition = slideOffset - (containerWidth / 2) + (slideWidth / 2);
+                
+                // Usar setTimeout para asegurar que el DOM esté completamente cargado
+                setTimeout(() => {
                     slider.scrollTo({
-                        left: scrollPosition,
-                        behavior: 'smooth'
+                        left: Math.max(0, scrollPosition),
+                        // behavior: 'smooth'
                     });
-                });
-
+                }, 100);
             }
 
-            // Centrar el día actual al cargar
-            for (let slide of slides) {
+            // Buscar y centrar el día actual
+            let slideEncontrado = false;
+            slides.forEach(slide => {
                 if (slide.dataset.dia === diaActual) {
                     centerSlide(slide);
-                    break;
+                    slideEncontrado = true;
                 }
+            });
+
+            // Si no se encuentra el día actual, centrar en el primer slide
+            if (!slideEncontrado && slides.length > 0) {
+                centerSlide(slides[0]);
             }
 
-            // Arrastrar con mouse (ajustado para el contenedor limitado)
+            // Funcionalidad de arrastrar con mouse
             let isDown = false;
             let startX, scrollLeft;
 
             slider.addEventListener('mousedown', (e) => {
                 isDown = true;
-                slider.classList.add('cursor-grabbing');
+                slider.style.cursor = 'grabbing';
                 startX = e.pageX - slider.getBoundingClientRect().left;
                 scrollLeft = slider.scrollLeft;
+                e.preventDefault();
             });
 
             slider.addEventListener('mouseleave', () => {
                 isDown = false;
-                slider.classList.remove('cursor-grabbing');
+                slider.style.cursor = 'grab';
             });
 
             slider.addEventListener('mouseup', () => {
                 isDown = false;
-                slider.classList.remove('cursor-grabbing');
+                slider.style.cursor = 'grab';
             });
 
             slider.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
                 const x = e.pageX - slider.getBoundingClientRect().left;
-                const walk = (x - startX) * 2; // Aumentamos la sensibilidad
+                const walk = (x - startX) * 2;
                 slider.scrollLeft = scrollLeft - walk;
+            });
+
+            // Agregar cursor pointer por defecto
+            slider.style.cursor = 'grab';
+
+            // Opcional: Actualizar el slide activo basado en el scroll
+            slider.addEventListener('scroll', () => {
+                const containerCenter = slider.scrollLeft + slider.offsetWidth / 2;
+                
+                slides.forEach(slide => {
+                    const slideStart = slide.offsetLeft;
+                    const slideEnd = slideStart + slide.offsetWidth;
+                    
+                    if (containerCenter >= slideStart && containerCenter <= slideEnd) {
+                        // Remover clase active de todos los slides
+                        slides.forEach(s => s.classList.remove('active'));
+                        // Agregar clase active al slide actual
+                        slide.classList.add('active');
+                    }
+                });
             });
         });
     </script>
