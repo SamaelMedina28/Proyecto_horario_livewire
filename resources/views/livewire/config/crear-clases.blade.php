@@ -71,18 +71,24 @@
             </div>
         @endforeach
 
+        <div class="flex justify-center gap-2">
+            <button type="button" wire:click="{{ $index > 0 ? 'eliminarClase' : '' }}({{ $index }})"
+                class=" text-xl text-white h-10 w-10 flex items-center justify-center rounded-full 
+                transition-all duration-150 ease-in-out 
+                {{ $index > 0 ? 'bg-red-600 hover:bg-red-600 hover:shadow-lg hover:scale-105 active:bg-red-700 active:scale-95 active:shadow-inner' : 'bg-gray-300 cursor-not-allowed' }}">
+                <i class="fa-solid fa-minus text-sm"></i>
+            </button>
+            <button type="button" wire:click="agregarClase"
+                class="bg-green-600 text-xl text-white h-10 w-10 flex items-center justify-center rounded-full 
+            transition-all duration-150 ease-in-out 
+            hover:bg-green-600 hover:shadow-lg hover:scale-105 
+            active:bg-green-700 active:scale-95 active:shadow-inner">
+                <i class="fa-solid fa-plus text-sm"></i>
+            </button>
 
-        <button type="button" wire:click="agregarClase"
-            class="bg-green-600 text-xl text-white h-10 w-10 flex items-center justify-center rounded-full 
-        transition-all duration-150 ease-in-out 
-        hover:bg-green-600 hover:shadow-lg hover:scale-105 
-        active:bg-green-700 active:scale-95 active:shadow-inner">
-            +
-        </button>
-
+        </div>
         <div class="flex justify-end w-full mt-6">
-            <x-button type="submit"
-                class="bg-green-700 hover:bg-green-800 focus:bg-green-800 active:bg-green-800">
+            <x-button type="submit" class="bg-green-700 hover:bg-green-800 focus:bg-green-800 active:bg-green-800">
                 {{ $mostrarTerminar ? 'Terminar' : 'Siguiente' }}
             </x-button>
         </div>
