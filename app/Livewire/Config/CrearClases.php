@@ -3,6 +3,7 @@
 namespace App\Livewire\Config;
 
 use App\Models\Clase;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CrearClases extends Component
@@ -67,7 +68,7 @@ class CrearClases extends Component
         //Si se muestra el boton terminar (es decir, si llegamos al ultimo dia y el siguiente dia es el lunes), redirigir a la vista de welcome
         if ($this->mostrarTerminar) {
             //Hacer que el campo "Nuevo" del usuario autenticado cambie a 0
-            auth()->user()->update(['nuevo' => 0]);
+            Auth::user()->update(['nuevo' => 0]);
             return $this->redirect(route('welcome'));
         }
         //Redirigir a la vista de materias.clases con el dia siguiente si aun no acaba la semana
@@ -79,7 +80,7 @@ class CrearClases extends Component
         $this->clases[] = [
             'materia_id' => '',
             'dia' => $this->diaActual,
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::user()->id,
             'salon' => '',
             'edificio' => '',
             'profesor' => '',
@@ -91,5 +92,15 @@ class CrearClases extends Component
     {
         //Se elimina la clase del array $clases segun el id que se pasa como parametro
         unset($this->clases[$index]);
+    }
+    public function omitir()
+    {
+        if ($this->diaActual === 'viernes') {
+            //Hacer que el campo "Nuevo" del usuario autenticado cambie a 0
+            Auth::user()->update(['nuevo' => 0]);
+            return $this->redirect(route('welcome'));
+        }
+        //Redirigir a la vista de materias.clases con el dia siguiente si aun no acaba la semana
+        $this->redirect(route('materias.clases', ['dia' => $this->diaSiguiente]), navigate: true);
     }
 }

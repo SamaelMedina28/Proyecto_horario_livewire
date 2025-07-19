@@ -17,7 +17,7 @@
                         class="w-full border border-gray-300 rounded px-2 py-1 text-sm focus:border-lime-500 focus:ring-lime-500">
                         <option value="" disabled selected>Selecciona una materia</option>
                         @foreach ($materias as $materia)
-                            <option value="{{ $materia->id }}">{{ $materia->id }} - {{ $materia->nombre }}</option>
+                            <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
                         @endforeach
                     </select>
                     @error('clases.' . $index . '.materia_id')
@@ -88,6 +88,9 @@
 
         </div>
         <div class="flex justify-end w-full mt-6">
+            <x-button type="button" wire:click="omitir" class="bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-500">
+                Omitir
+            </x-button>
             <x-button type="submit" class="bg-green-700 hover:bg-green-800 focus:bg-green-800 active:bg-green-800">
                 {{ $mostrarTerminar ? 'Terminar' : 'Siguiente' }}
             </x-button>

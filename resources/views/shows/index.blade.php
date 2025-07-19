@@ -34,7 +34,7 @@
     <div class="py-6 select-none">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="slider-outer">
-                <div id="slider" class="slider-container h-[calc(80vh-4rem)]">
+                <div id="slider" class="slider-container h-[80vh]">
                     @foreach ($dias as $dia)
                         <div class="slide {{ $dia === $diaActual ? 'active' : '' }}" data-dia="{{ $dia }}">
                             <div class="space-y-6">
@@ -49,8 +49,12 @@
                                 @endphp
 
                                 @if ($clasesDia->isEmpty())
-                                    <div class="text-center text-gray-500">
-                                        No hay clases programadas para este día
+                                    <div class="flex flex-col items-center justify-center p-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-black mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                        </svg>
+                                        <p class="text-black text-lg font-medium">No hay clases programadas</p>
+                                        <p class="text-black/60 text-sm mt-1">Para este día no hay horarios registrados</p>
                                     </div>
                                 @else
                                     @foreach ($clasesDia as $clase)

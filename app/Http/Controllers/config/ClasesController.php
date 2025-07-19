@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Clase;
-
+use Illuminate\Support\Facades\Auth;
 class ClasesController extends Controller
 {
     public function index()
@@ -23,12 +23,12 @@ class ClasesController extends Controller
             $diaActual = 'lunes';
         }
         // Consulta
-        $clases = auth()->user()->clases()->get();
+        $clases = Auth::user()->clases()->get();
         return view('shows.index', compact('clases', 'diaActual','dias'));
     }
     public function show($id)
     {
-        $clase = auth()->user()->clases()->where('id', $id)->get();
+        $clase = Auth::user()->clases()->where('id', $id)->get();
         return view('shows.clase', compact('clase'));
     }
 }
